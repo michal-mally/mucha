@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mucha.iml" filepath="$PROJECT_DIR$/.idea/modules/mucha.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mucha_main.iml" filepath="$PROJECT_DIR$/.idea/modules/mucha_main.iml" group="mucha" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/mucha_test.iml" filepath="$PROJECT_DIR$/.idea/modules/mucha_test.iml" group="mucha" />
+    </modules>
+  </component>
+</project>
