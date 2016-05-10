@@ -66,12 +66,12 @@ class AmandaTests extends Specification {
 
     }
 
-    def "new Company assign to not-Amanda (Berta)"() {
+    def "new Company assign to not-Amanda Berta"() {
         given:
         String companyName = "TEST_COMPANY_" + Math.random();
 
         when:
-        createCompanyContact(companyName, amanda.getId())
+        createCompanyContact(companyName, berta.getId())
 
         then:
         sleep(5000);
@@ -116,7 +116,7 @@ class AmandaTests extends Specification {
 
     }
 
-    def "new Company assign to Amanda (by automatic system), second company exists "() {
+    def "new Company assign to Amanda, second company exists "() {
 
         given:
         String companyName = "TEST_COMPANY_" + Math.random();
