@@ -1,46 +1,81 @@
 buildscript {
-	ext {
-		springBootVersion = '1.3.5.RELEASE'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}") 
-	}
+    ext {
+        springBootVersion = '1.3.5.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+        maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
+        jcenter()
+        maven {
+            url 'http://dl.bintray.com/basecrm/maven'
+        }
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+       // compile('com.getbase:basecrm-java:1.3.2')
+    }
 }
 
 apply plugin: 'java'
 apply plugin: 'eclipse'
-apply plugin: 'spring-boot' 
+apply plugin: 'spring-boot'
 
 jar {
-	baseName = 'mucha'
-	version = '0.0.1-SNAPSHOT'
+    baseName = 'mucha'
+    version = '0.0.1-SNAPSHOT'
 }
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+
 repositories {
-	mavenCentral()
+    jcenter()
+    maven {
+        url 'http://dl.bintray.com/basecrm/maven'
+    }
+}
+repositories {
+    mavenCentral()
+}
+
+repositories {
+    // Spock releases are available from Maven Central
+    mavenCentral()
+    // Spock snapshots are available from the Sonatype OSS snapshot repository
+    maven { url "http://oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-cache')
-	compile('org.springframework.boot:spring-boot-starter-data-jpa')
-	compile('org.projectlombok:lombok:1.16.6')
-	compile('org.springframework.retry:spring-retry')
-	compile('org.springframework.boot:spring-boot-starter-web')
-	runtime('com.h2database:h2')
-	runtime('mysql:mysql-connector-java')
-	testCompile('org.springframework.boot:spring-boot-starter-test') 
+    compile('org.springframework.boot:spring-boot-starter-cache')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.projectlombok:lombok:1.16.6')
+    compile('org.springframework.retry:spring-retry')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('com.getbase:basecrm-java:1.3.2')
+    runtime('com.h2database:h2')
+    runtime('mysql:mysql-connector-java')
+    testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
+dependencies {
+    // mandatory dependencies for using Spock
+    compile "org.codehaus.groovy:groovy-all:2.4.1"
+    testCompile "org.spockframework:spock-core:1.0-groovy-2.4"
+
+    // optional dependencies for using Spock
+    testCompile "org.hamcrest:hamcrest-core:1.3" // only necessary if Hamcrest matchers are used
+    testRuntime "cglib:cglib-nodep:3.1"          // allows mocking of classes (in addition to interfaces)
+    testRuntime "org.objenesis:objenesis:2.1"
+    // allows mocking of classes without default constructor (together with CGLIB)
+
+    // dependencies used by examples in this project
+    testRuntime "com.h2database:h2:1.4.182"
+}
 
 eclipse {
-	classpath {
-		 containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
-		 containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
-	}
+    classpath {
+        containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+        containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+    }
 }
