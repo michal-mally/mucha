@@ -1,8 +1,9 @@
 package com.solidbrain.russads;
 
+import static com.solidbrain.russads.configuration.ConfigurationHelper.AUTO_SALES_REP_KEY;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -33,6 +34,8 @@ import com.getbase.services.DealsService;
 import com.getbase.sync.Meta;
 import com.getbase.sync.Sync;
 import com.solidbrain.russads.configuration.ConfigurationHelper;
+import com.solidbrain.russads.configuration.ConfigurationPropertyRepository;
+import com.solidbrain.russads.configuration.model.ConfigurationProperty;
 
 @Configuration
 @EnableScheduling
@@ -41,6 +44,8 @@ public class AutomaticTaskCreator {
 	@Autowired
 	ConfigurationHelper configurationHelper;
 
+	@Autowired
+	ConfigurationPropertyRepository dao;
 
 	@Value("${BASECRM_ACCESS_TOKEN}")
 	private String BASECRM_ACCESS_TOKEN;
@@ -52,8 +57,7 @@ public class AutomaticTaskCreator {
 
 	private Client client;
 
-	private List<Long> salesRepIdsWithAutomaticTasks;
-
+	private List<ConfigurationProperty> salesRepIdsWithAutomaticTasks;
 
 	@PostConstruct
 	private void initClient() {
@@ -62,9 +66,7 @@ public class AutomaticTaskCreator {
 				.verbose()
 				.build());
 		configurationHelper.fakeFlayway();
-		//List<ConfigurationProperty> salesRep =  dao.findByKey(AUTO_SALES_REP_KEY);
-		salesRepIdsWithAutomaticTasks = new ArrayList<>();
-		salesRepIdsWithAutomaticTasks.add(920274L); // Amanda
+		salesRepIdsWithAutomaticTasks = dao.findByKey(AUTO_SALES_REP_KEY);
 
 	}
 
@@ -115,7 +117,7 @@ public class AutomaticTaskCreator {
 	}
 
 	private boolean isAutomaticSalesRepId(Long userId) {
-		return salesRepIdsWithAutomaticTasks.contains(userId);
+		return salesRepIdsWithAutomaticTasks.stream().filter(r -> r.getValue().equals(userId.toString())).count() > 0;
 	}
 
 	private boolean isContactACompany(Contact contact) {
