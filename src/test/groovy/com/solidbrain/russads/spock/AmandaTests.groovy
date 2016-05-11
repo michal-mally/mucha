@@ -57,7 +57,7 @@ class AmandaTests extends Specification {
         Contact company = createCompanyContact(companyName, amanda.getId())
 
         then:
-        sleep(5000);
+        sleep(20000);
         Deal deal = getDealByName(createDealName(companyName));
         deal != null
         deal.ownerId == amanda.getId()
@@ -74,7 +74,7 @@ class AmandaTests extends Specification {
         createCompanyContact(companyName, berta.getId())
 
         then:
-        sleep(5000);
+        sleep(20000);
         Deal deal = getDealByName(createDealName(companyName));
         deal == null
     }
@@ -89,7 +89,7 @@ class AmandaTests extends Specification {
         createPersonContact(personName, amanda.getId())
 
         then:
-        sleep(5000);
+        sleep(20000);
         Deal deal = getDealByName(createDealName(personName));
         deal == null
 
@@ -110,7 +110,7 @@ class AmandaTests extends Specification {
         cocaCola = client.contacts().update(cocaCola)
 
         then:
-        sleep(5000);
+        sleep(20000);
         List<Deal> deals = getDealsByContact(cocaCola.getId())
         deals.isEmpty()
 
@@ -127,7 +127,7 @@ class AmandaTests extends Specification {
         Contact company = createCompanyContact(companyName, amanda.getId())
 
         then:
-        sleep(5000);
+        sleep(20000);
         Deal deal = getDealByName(createDealName(companyName));
         deal != null
         deal.ownerId == amanda.getId()
@@ -171,7 +171,7 @@ class AmandaTests extends Specification {
     }
 
     String createDealName(String contactName) {
-        return contactName + new Date().format("dd.MM.yyyy")
+        return contactName + " " +  new Date().format("dd.MM.yyyy")
     }
 
     def cleanupSpec() {
