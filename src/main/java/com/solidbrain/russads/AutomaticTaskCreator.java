@@ -7,7 +7,9 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.inject.Inject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -31,10 +33,14 @@ import com.getbase.models.User;
 import com.getbase.services.DealsService;
 import com.getbase.sync.Meta;
 import com.getbase.sync.Sync;
+import com.solidbrain.russads.configuration.ConfigurationHelper;
 
 @Configuration
 @EnableScheduling
 public class AutomaticTaskCreator {
+
+	@Autowired
+	ConfigurationHelper configurationHelper;
 
 	@Value("${BASECRM_ACCESS_TOKEN}")
 	private String BASECRM_ACCESS_TOKEN;
@@ -56,6 +62,7 @@ public class AutomaticTaskCreator {
 				.build());
 		salesRepIdsWithAutomaticTasks = new ArrayList<>();
 		salesRepIdsWithAutomaticTasks.add(920274L); // Amanda
+		configurationHelper.doSf();
 	}
 
 	@Scheduled(fixedDelay = 5000)

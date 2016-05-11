@@ -73,6 +73,12 @@ dependencies {
     testRuntime "com.h2database:h2:1.4.182"
 }
 
+plugins {
+    id "org.flywaydb.flyway" version "4.0.1"
+}
+
+
+
 eclipse {
     classpath {
         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
