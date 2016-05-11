@@ -11,20 +11,25 @@ import com.solidbrain.russads.configuration.model.ConfigurationProperty;
 
 public class ConfigurationHelper {
 
+	public static final String AUTO_SALES_REP_KEY = "autoSalesRep";
+
 	@PersistenceContext
 	EntityManager entityManager;
 
 	@Transactional
-	public void doSf(){
+	public void fakeFlayway() {
 		ConfigurationProperty configurationProperty = new ConfigurationProperty();
-		configurationProperty.setKey("test");
-		configurationProperty.setValue("12134dasf");
+		configurationProperty.setKey(AUTO_SALES_REP_KEY);
+		configurationProperty.setValue("920274");
 		entityManager.persist(configurationProperty);
 
 		List<ConfigurationProperty> list =
-		entityManager.createQuery("Select c from ConfigurationProperty c", ConfigurationProperty.class).getResultList();
+				entityManager.createQuery("Select c from ConfigurationProperty c", ConfigurationProperty.class)
+						.getResultList();
 
 		System.out.println(list);
 	}
+
+
 
 }

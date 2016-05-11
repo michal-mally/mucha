@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,6 +41,7 @@ public class AutomaticTaskCreator {
 	@Autowired
 	ConfigurationHelper configurationHelper;
 
+
 	@Value("${BASECRM_ACCESS_TOKEN}")
 	private String BASECRM_ACCESS_TOKEN;
 
@@ -54,15 +54,18 @@ public class AutomaticTaskCreator {
 
 	private List<Long> salesRepIdsWithAutomaticTasks;
 
+
 	@PostConstruct
 	private void initClient() {
 		client = new Client(new com.getbase.Configuration.Builder()
 				.accessToken(BASECRM_ACCESS_TOKEN)
 				.verbose()
 				.build());
+		configurationHelper.fakeFlayway();
+		//List<ConfigurationProperty> salesRep =  dao.findByKey(AUTO_SALES_REP_KEY);
 		salesRepIdsWithAutomaticTasks = new ArrayList<>();
 		salesRepIdsWithAutomaticTasks.add(920274L); // Amanda
-		configurationHelper.doSf();
+
 	}
 
 	@Scheduled(fixedDelay = 5000)
