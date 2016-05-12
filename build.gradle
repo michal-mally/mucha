@@ -73,6 +73,23 @@ dependencies {
     testRuntime "com.h2database:h2:1.4.182"
 }
 
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.com.boxfuse.client:flyway-release:4.0.1"
+    }
+}
+
+apply plugin: "org.flywaydb.flyway"
+
+
+
+
+
 eclipse {
     classpath {
         containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
